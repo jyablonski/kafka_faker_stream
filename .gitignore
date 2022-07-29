@@ -1,0 +1,16 @@
+.DS_Store
+.env
+*.env
+**.ipynb
+.log
+**.log
+**./log
+**.env
+jacobs_notes.md
+prac.ipynb
+data-generator/extra_notes.md
+pyspark_logs/
+.jacobs-makefile
+metadata
+**.crc
+*.pytest_cache

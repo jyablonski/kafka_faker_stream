@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pytest = "*"
+pytest_mock = "*"
+
+[packages]
+confluent-kafka = "*"
+Faker = "*"
+
+[requires]
+python_version = "3.8"
