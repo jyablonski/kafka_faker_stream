@@ -18,6 +18,14 @@ docker-run2:
 docker-down:
 	@docker-compose -f docker/docker-compose.yml down
 
+.PHONY: build-venv
+build-venv:
+	@pipenv install
+
+.PHONY: build-venv-test
+build-venv-test:
+	@pipenv install --dev
+
 .PHONY: test
 test:
 	@pipenv run pytest -v
