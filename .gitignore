@@ -14,3 +14,4 @@ pyspark_logs/
 metadata
 **.crc
 *.pytest_cache
+.vscode
