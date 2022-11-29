@@ -1,4 +1,4 @@
-name: Jacob's S3 Deployment
+name: Jacob's ECR Deployment
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
     - master
 
 env:
-  BUCKET_NAME : ${{ secrets.AWS_BUCKET }}
-  IAM_ROLE: ${{ secrets.IAM_ROLE }}
+  IAM_ROLE: ${{ secrets.IAM_ROLE_ECR }}
   AWS_REGION : "us-east-1"
+  ECR_REPO : ${{ secrets.ECR_REPO }}
 
 # permission can be added at job level or workflow level    
 permissions:
@@ -28,8 +28,13 @@ jobs:
           role-to-assume: ${{ env.IAM_ROLE }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
-      
-      # Upload a file to AWS s3
-      - name:  Copy directory to S3
+        
+      - name: Build, tag, and push image to Amazon ECR
+        if: github.ref == 'refs/heads/master'
+        env:
+          ECR_REGISTRY: ${{ env.ECR_REPO }}
+          ECR_REPOSITORY: jacobs_repo
+          IMAGE_TAG: hello-world
         run: |
-          aws s3 sync . s3://${{ env.BUCKET_NAME }}/kafka-folder/
+          docker-compose -f docker/docker-compose-test.yml build
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
