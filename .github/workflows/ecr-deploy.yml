@@ -16,7 +16,7 @@ permissions:
       contents: read    # This is required for actions/checkout
 
 jobs:
-  S3PackageUpload:
+  ECRUpload:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -28,9 +28,12 @@ jobs:
           role-to-assume: ${{ env.IAM_ROLE }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
-        
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+          
       - name: Build, tag, and push image to Amazon ECR
-        if: github.ref == 'refs/heads/master'
         env:
           ECR_REGISTRY: ${{ env.ECR_REPO }}
           ECR_REPOSITORY: jacobs_repo
