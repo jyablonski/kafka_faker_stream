@@ -25,8 +25,8 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.IAM_ROLE }}
-          role-session-name: samplerolesession
+          role-to-assume: ${{ env.IAM_ROLE }}            # use full arn
+          role-session-name: kafka-faker-stream-ecr-cicd
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
